@@ -4,8 +4,7 @@
 
 Most people know AI can answer questions. Few understand *how* it retrieves the right information to do so. RAG Explorer breaks down all four Retrieval Augmented Generation patterns — visually, interactively, and in plain English — so anyone can understand them regardless of technical background.
 
-🔗 **Live:** [greyinfer.github.io/RAG-Explorer](https://greyinfer.github.io/RAG-Explorer)
-               https://rag-explorer.netlify.app/
+🔗 **Live:** https://rag-explorer.netlify.app/
 
 ---
 
