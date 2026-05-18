@@ -1174,14 +1174,23 @@ footer span { color: rgba(255,255,255,0.8); }
 <script>
 const delay = ms => new Promise(r => setTimeout(r, ms));
 
-// Scroll canvas into view after each step
+// Scroll to canvas — only called on Start, not on Next Step
 function scrollToCanvas(canvasId) {
+  // Only scroll on mobile, and only to bring canvas into view gently
   if (window.innerWidth <= 900) {
-    // Mobile: scroll to canvas area
-    const el = document.getElementById(canvasId);
-    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+    // Map canvas id to chapter section id
+    const sectionMap = {
+      't-canvas': 'ch1', 'v-canvas': 'ch2',
+      'g-canvas': 'ch3', 'a-canvas': 'ch4'
+    };
+    const sectionId = sectionMap[canvasId];
+    if (sectionId) {
+      const section = document.getElementById(sectionId);
+      // Scroll the canvas area into view, not overshooting to next chapter
+      const canvas = document.getElementById(canvasId);
+      if (canvas) setTimeout(() => canvas.scrollIntoView({ behavior: "smooth", block: "nearest" }), 150);
+    }
   }
-  // Desktop: canvas is already visible in right panel - no scroll needed
 }
 
 function typewrite(el, text, ms) {
@@ -1260,16 +1269,16 @@ function tStart(){
   tData=tMatchQ(tQ); tStep=0;
   buildSteps('t',tNames);
   document.getElementById('t-controls').style.display='block';
-  scrollToCanvas('t-canvas');
   setTimeout(()=>tShowStep(1),300);
 }
 async function tShowStep(n){
-  tStep=n; scrollToCanvas('t-canvas'); updateSteps('t',n,T); showNextBtn('t',false);
+  tStep=n; updateSteps('t',n,T); showNextBtn('t',false);
   if(n===1) await tRenderChunk();
   if(n===2) await tRenderEmbed();
   if(n===3) await tRenderSim();
   if(n===4) await tRenderRetrieve();
   if(n===5) await tRenderAnswer();
+  if(n===1) scrollToCanvas('t-canvas');
   if(n<T){ showNextBtn('t',true); setHint('t','Take your time. Click when ready.'); }
   else{ showNextBtn('t',false); setHint('t','✓ Complete — you\'ve seen the full Traditional RAG process.'); }
   msbUpdate('t', n);
@@ -1355,16 +1364,16 @@ function vStart(){
   vData=vMatchQ(vQ); vStep=0;
   buildSteps('v',vNames);
   document.getElementById('v-controls').style.display='block';
-  scrollToCanvas('v-canvas');
   setTimeout(()=>vShowStep(1),300);
 }
 async function vShowStep(n){
-  vStep=n; scrollToCanvas('v-canvas'); updateSteps('v',n,V); showNextBtn('v',false);
+  vStep=n; updateSteps('v',n,V); showNextBtn('v',false);
   if(n===1) await vRenderIndex();
   if(n===2) await vRenderExpand();
   if(n===3) await vRenderBM25();
   if(n===4) await vRenderRetrieve();
   if(n===5) await vRenderAnswer();
+  if(n===1) scrollToCanvas('v-canvas');
   if(n<V){ showNextBtn('v',true); setHint('v','Take your time. Click when ready.'); }
   else{ showNextBtn('v',false); setHint('v','✓ Complete — you\'ve seen the full Vectorless RAG process.'); }
   msbUpdate('v', n);
@@ -1458,17 +1467,17 @@ function gStart(){
   gData=gQDB[gKey]; gStep=0;
   buildSteps('g',gNames);
   document.getElementById('g-controls').style.display='block';
-  scrollToCanvas('g-canvas');
   setTimeout(()=>gShowStep(1),300);
 }
 async function gShowStep(n){
-  gStep=n; scrollToCanvas('g-canvas'); updateSteps('g',n,G); showNextBtn('g',false);
+  gStep=n; updateSteps('g',n,G); showNextBtn('g',false);
   if(n===1) await gRenderDoc();
   if(n===2) await gRenderGraph();
   if(n===3) await gRenderEntity();
   if(n===4) await gRenderTraversal();
   if(n===5) await gRenderSubgraph();
   if(n===6) await gRenderAnswer();
+  if(n===1) scrollToCanvas('g-canvas');
   if(n<G){ showNextBtn('g',true); setHint('g','Take your time. Click when ready.'); }
   else{ showNextBtn('g',false); setHint('g','✓ Complete — you\'ve seen the full Graph RAG process.'); }
   msbUpdate('g', n);
@@ -1566,11 +1575,10 @@ function aStart(){
   aData=aQDB[aKey]; aStep=0;
   buildSteps('a',aNames);
   document.getElementById('a-controls').style.display='block';
-  scrollToCanvas('a-canvas');
   setTimeout(()=>aShowStep(1),300);
 }
 async function aShowStep(n){
-  aStep=n; scrollToCanvas('a-canvas'); updateSteps('a',n,A); showNextBtn('a',false);
+  aStep=n; updateSteps('a',n,A); showNextBtn('a',false);
   if(n===1) await aRenderAnalyse();
   if(n===2) await aRenderTools();
   if(n===3) await aRenderExecute();
@@ -1579,6 +1587,7 @@ async function aShowStep(n){
   if(n===6) await aRenderRetry();
   if(n===7) await aRenderSynth();
   if(n===8) await aRenderAnswer();
+  if(n===1) scrollToCanvas('a-canvas');
   if(n<A){ showNextBtn('a',true); setHint('a','Take your time. Click when ready.'); }
   else{ showNextBtn('a',false); setHint('a','✓ Complete — you\'ve seen the full Agentic RAG process.'); }
   msbUpdate('a', n);
