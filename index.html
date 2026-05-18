@@ -3,19 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAG Explorer — Four Ways AI Finds Answers</title>
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="RAG Explorer — An interactive visual guide to the four types of Retrieval Augmented Generation: Traditional RAG, Vectorless RAG, Graph RAG, and Agentic RAG. Watch every step happen in real time.">
-  <meta name="keywords" content="RAG, retrieval augmented generation, traditional RAG, vectorless RAG, graph RAG, agentic RAG, AI retrieval, LLM, vector embeddings, BM25, knowledge graph, AI architecture">
+<title>RAG Explorer — All 4 Types of RAG Explained Visually (Traditional, Vectorless, Graph, Agentic)</title>
+  <!-- Primary SEO -->
+  <meta name="description" content="An interactive visual guide to all 4 types of RAG: Traditional RAG, Vectorless RAG, Graph RAG, and Agentic RAG — explained step by step. Watch every retrieval step happen in real time. No signup needed.">
+  <meta name="keywords" content="RAG types explained, traditional RAG vs graph RAG, agentic RAG, vectorless RAG, retrieval augmented generation explained, how does RAG work, RAG step by step, RAG visual guide, RAG interactive, types of RAG, RAG architecture, LLM retrieval, vector embeddings explained, BM25 retrieval, knowledge graph RAG, RAG for beginners">
   <meta name="author" content="Rashmi Singh">
-  <meta property="og:title" content="RAG Explorer — Four Ways AI Finds Answers">
-  <meta property="og:description" content="An interactive visual guide to all four RAG patterns. Watch Traditional RAG, Vectorless RAG, Graph RAG, and Agentic RAG step by step.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph (LinkedIn, Facebook, WhatsApp previews) -->
+  <meta property="og:title" content="RAG Explorer — All 4 Types of RAG Explained Visually">
+  <meta property="og:description" content="Watch Traditional RAG, Vectorless RAG, Graph RAG and Agentic RAG work step by step. The clearest visual explanation of RAG on the internet.">
   <meta property="og:url" content="https://rag-explorer.netlify.app/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="RAG Explorer">
+
+  <!-- Twitter / X card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="RAG Explorer — Four Ways AI Finds Answers">
-  <meta name="twitter:description" content="Interactive visual guide to RAG patterns. Watch every retrieval step in real time.">
+  <meta name="twitter:title" content="RAG Explorer — All 4 Types of RAG Explained Visually">
+  <meta name="twitter:description" content="Watch Traditional, Vectorless, Graph and Agentic RAG work step by step. Interactive. Free. No signup.">
+  <meta name="twitter:creator" content="@rashmisingh">
+
+  <!-- Canonical -->
   <link rel="canonical" href="https://rag-explorer.netlify.app/">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "RAG Explorer",
+    "url": "https://rag-explorer.netlify.app/",
+    "description": "An interactive visual guide to all four types of Retrieval Augmented Generation (RAG): Traditional RAG, Vectorless RAG, Graph RAG, and Agentic RAG. Watch every step happen in real time.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Rashmi Singh"
+    },
+    "keywords": "RAG, retrieval augmented generation, traditional RAG, vectorless RAG, graph RAG, agentic RAG",
+    "inLanguage": "en",
+    "isAccessibleForFree": true
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage (helps Google show FAQ rich results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the different types of RAG?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There are four main types of RAG: Traditional RAG (vector similarity search), Vectorless RAG (BM25 keyword scoring), Graph RAG (knowledge graph traversal), and Agentic RAG (multi-step AI agent with planning, tool selection, and retry loops)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Traditional RAG work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Traditional RAG converts your query into a vector embedding, compares it against embedded document chunks using cosine similarity, retrieves the highest-matching chunk, and passes it to an LLM to generate a grounded answer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Vectorless RAG?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Vectorless RAG uses BM25 keyword scoring instead of vector embeddings. An LLM first expands your query into precise terminology, then BM25 ranks documents by exact keyword frequency. Best for legal and compliance use cases where exact wording matters."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Graph RAG?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Graph RAG builds a knowledge graph of entities and relationships from documents. Queries traverse this graph hop by hop to find connected answers. Best for fraud detection, supply chain risk, and any problem where relationships between entities matter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Agentic RAG?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Agentic RAG uses an AI agent that plans, selects tools, executes sub-queries across multiple sources, validates confidence scores, retries weak results, and grounds the final answer. Best for complex multi-source research tasks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Traditional RAG vs Graph RAG vs Agentic RAG — which should I use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use Traditional RAG for document Q&A and knowledge bases. Use Vectorless RAG for legal or compliance text where exact wording matters. Use Graph RAG when answers depend on relationships between entities. Use Agentic RAG for complex research requiring multiple sources and validation."
+        }
+      }
+    ]
+  }
+  </script>
+
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1823,5 +1916,16 @@ function aSetPill(el, key) {
 }
 
 </script>
+
+<!-- SEO content for search engines -->
+<div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;" aria-hidden="true">
+  <h2>RAG Types Explained — A Complete Visual Guide</h2>
+  <p>RAG Explorer is an interactive guide to Retrieval Augmented Generation (RAG). Learn how all four types of RAG work: Traditional RAG using vector embeddings and cosine similarity, Vectorless RAG using BM25 keyword scoring with LLM query expansion, Graph RAG using knowledge graph traversal across entity relationships, and Agentic RAG using multi-step AI agents with confidence validation and retry loops.</p>
+  <h3>Traditional RAG vs Vectorless RAG vs Graph RAG vs Agentic RAG</h3>
+  <p>Traditional RAG is best for FAQ and knowledge bases. Vectorless RAG is best for legal documents and contracts where exact wording matters. Graph RAG is best for fraud detection and relationship analysis. Agentic RAG is best for complex research requiring multiple data sources.</p>
+  <h3>How does RAG work step by step?</h3>
+  <p>RAG (Retrieval Augmented Generation) works by retrieving relevant context from your data before generating an answer. This grounds the AI response in real information rather than hallucinated content.</p>
+</div>
+
 </body>
 </html>
