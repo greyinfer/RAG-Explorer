@@ -1,63 +1,74 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RAG Explorer — Four Ways AI Finds Answers</title>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="RAG Explorer — An interactive visual guide to the four types of Retrieval Augmented Generation: Traditional RAG, Vectorless RAG, Graph RAG, and Agentic RAG. Watch every step happen in real time.">
+  <meta name="keywords" content="RAG, retrieval augmented generation, traditional RAG, vectorless RAG, graph RAG, agentic RAG, AI retrieval, LLM, vector embeddings, BM25, knowledge graph, AI architecture">
+  <meta name="author" content="Rashmi Singh">
+  <meta property="og:title" content="RAG Explorer — Four Ways AI Finds Answers">
+  <meta property="og:description" content="An interactive visual guide to all four RAG patterns. Watch Traditional RAG, Vectorless RAG, Graph RAG, and Agentic RAG step by step.">
+  <meta property="og:url" content="https://rag-explorer.netlify.app/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RAG Explorer — Four Ways AI Finds Answers">
+  <meta name="twitter:description" content="Interactive visual guide to RAG patterns. Watch every retrieval step in real time.">
+  <link rel="canonical" href="https://rag-explorer.netlify.app/">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-/* Seeing Theory exact palette from screenshots */
-–orange:    #e8a838;
-–orange-dk: #d4942a;
-–teal:      #5bc8af;
-–navy:      #2d2d3f;
-–text:      #333333;
-–text2:     #555555;
-–text3:     #888888;
-–white:     #ffffff;
-–border:    #e0e0e0;
+  /* Seeing Theory exact palette from screenshots */
+  --orange:    #e8a838;
+  --orange-dk: #d4942a;
+  --teal:      #5bc8af;
+  --navy:      #2d2d3f;
+  --text:      #333333;
+  --text2:     #555555;
+  --text3:     #888888;
+  --white:     #ffffff;
+  --border:    #e0e0e0;
 
-/* Per-chapter background colours — muted, soft, like Seeing Theory */
-–ch1-bg:    #c8dce8;   /* powder blue  — Traditional */
-–ch2-bg:    #f5e6d8;   /* warm cream   — Vectorless  */
-–ch3-bg:    #d4e8d4;   /* sage green   — Graph       */
-–ch4-bg:    #e8daf0;   /* soft lavender— Agentic     */
+  /* Per-chapter background colours — muted, soft, like Seeing Theory */
+  --ch1-bg:    #c8dce8;   /* powder blue  — Traditional */
+  --ch2-bg:    #f5e6d8;   /* warm cream   — Vectorless  */
+  --ch3-bg:    #d4e8d4;   /* sage green   — Graph       */
+  --ch4-bg:    #e8daf0;   /* soft lavender— Agentic     */
 
-/* Chapter accent colours for SVG/buttons */
-–ch1-accent:#4a90c4;
-–ch2-accent:#e8a838;
-–ch3-accent:#4caf7d;
-–ch4-accent:#9b6fc4;
+  /* Chapter accent colours for SVG/buttons */
+  --ch1-accent:#4a90c4;
+  --ch2-accent:#e8a838;
+  --ch3-accent:#4caf7d;
+  --ch4-accent:#9b6fc4;
 
-–font: ‘Assistant’, sans-serif;
+  --font: 'Assistant', sans-serif;
 }
 
 html { scroll-behavior: smooth; }
-body { font-family: ‘Assistant’, sans-serif; color: #333333; background: #f4f4f0; }
+body { font-family: 'Assistant', sans-serif; color: #333333; background: #f4f4f0; }
 
 /* ── NAV ── */
 nav {
-background: #2d2d3f;
-padding: 0 2rem;
-display: flex; align-items: center; gap: 0;
-position: sticky; top: 0; z-index: 200;
-height: 52px;
+  background: #2d2d3f;
+  padding: 0 2rem;
+  display: flex; align-items: center; gap: 0;
+  position: sticky; top: 0; z-index: 200;
+  height: 52px;
 }
 .nav-brand {
-font-size: 0.85rem; font-weight: 700; color: #ffffff;
-letter-spacing: 0.04em; margin-right: 2rem; white-space: nowrap;
+  font-size: 0.85rem; font-weight: 700; color: #ffffff;
+  letter-spacing: 0.04em; margin-right: 2rem; white-space: nowrap;
 }
 .nav-links { display: flex; gap: 0; flex: 1; }
 .nav-link {
-font-size: 0.78rem; font-weight: 400; color: rgba(255,255,255,0.65);
-text-decoration: none; padding: 0 1.1rem; height: 52px;
-display: flex; align-items: center;
-border-right: 1px solid rgba(255,255,255,0.1);
-transition: all 0.15s; white-space: nowrap; cursor: pointer;
+  font-size: 0.78rem; font-weight: 400; color: rgba(255,255,255,0.65);
+  text-decoration: none; padding: 0 1.1rem; height: 52px;
+  display: flex; align-items: center;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.15s; white-space: nowrap; cursor: pointer;
 }
 .nav-link:first-child { border-left: 1px solid rgba(255,255,255,0.1); }
 .nav-link:hover { color: #ffffff; background: rgba(255,255,255,0.08); }
@@ -66,43 +77,43 @@ transition: all 0.15s; white-space: nowrap; cursor: pointer;
 
 /* ── HOME SECTION ── */
 .home-section {
-background: #2d2d3f;
-color: white;
-padding: 5rem 2rem 5rem;
-text-align: center;
+  background: #2d2d3f;
+  color: white;
+  padding: 5rem 2rem 5rem;
+  text-align: center;
 }
 .home-eyebrow {
-font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
-text-transform: uppercase; color: #e8a838; margin-bottom: 1.2rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #e8a838; margin-bottom: 1.2rem;
 }
 .home-title {
-font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700;
-line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem;
-color: #ffffff;
+  font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700;
+  line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem;
+  color: #ffffff;
 }
 .home-title em { font-style: italic; color: #e8a838; font-weight: 300; }
 .home-sub {
-font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.7);
-line-height: 1.8; max-width: 560px; margin: 0 auto 2.5rem;
+  font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.7);
+  line-height: 1.8; max-width: 560px; margin: 0 auto 2.5rem;
 }
 .home-sub strong { font-weight: 600; color: rgba(255,255,255,0.9); }
 
 /* ── CHAPTER CARDS on home ── */
 .chapter-cards {
-display: grid; grid-template-columns: repeat(4, 1fr);
-gap: 1px; background: rgba(255,255,255,0.1);
-max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: rgba(255,255,255,0.1);
+  max-width: 900px; margin: 0 auto;
 }
 .chapter-card {
-background: #2d2d3f; padding: 2rem 1.4rem;
-text-decoration: none; transition: background 0.2s; display: block;
+  background: #2d2d3f; padding: 2rem 1.4rem;
+  text-decoration: none; transition: background 0.2s; display: block;
 }
 .chapter-card:hover { background: rgba(255,255,255,0.06); }
 .cc-icon {
-width: 56px; height: 56px; border-radius: 50%;
-background: #1e1e2e;
-display: flex; align-items: center; justify-content: center;
-margin: 0 auto 1rem; font-size: 1.4rem;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #1e1e2e;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem; font-size: 1.4rem;
 }
 .cc-chapter { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.4rem; }
 .cc-title { font-size: 0.95rem; font-weight: 700; color: #ffffff; margin-bottom: 0.4rem; line-height: 1.3; }
@@ -111,107 +122,107 @@ margin: 0 auto 1rem; font-size: 1.4rem;
 
 /* ── CHAPTER SECTIONS ── */
 .chapter-section {
-display: flex; min-height: 100vh;
-scroll-margin-top: 52px;
+  display: flex; min-height: 100vh;
+  scroll-margin-top: 52px;
 }
 
 /* LEFT PANEL — coloured, scrollable */
 .left-panel {
-width: 340px; flex-shrink: 0;
-padding: 3rem 2rem 4rem;
-overflow-y: auto;
-position: relative;
+  width: 340px; flex-shrink: 0;
+  padding: 3rem 2rem 4rem;
+  overflow-y: auto;
+  position: relative;
 }
 .lp-chapter-label {
-font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
-text-transform: uppercase; color: rgba(0,0,0,0.45); margin-bottom: 0.5rem;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(0,0,0,0.45); margin-bottom: 0.5rem;
 }
 .lp-title {
-font-size: 2rem; font-weight: 700; line-height: 1.2;
-color: #333333; margin-bottom: 1.2rem; letter-spacing: -0.02em;
+  font-size: 2rem; font-weight: 700; line-height: 1.2;
+  color: #333333; margin-bottom: 1.2rem; letter-spacing: -0.02em;
 }
 .lp-desc {
-font-size: 0.9rem; font-weight: 300; color: #555555;
-line-height: 1.8; margin-bottom: 1.4rem;
+  font-size: 0.9rem; font-weight: 300; color: #555555;
+  line-height: 1.8; margin-bottom: 1.4rem;
 }
 .lp-desc strong { font-weight: 600; color: #333333; }
 .lp-best {
-font-size: 0.75rem; color: #888888; margin-bottom: 1.8rem;
-display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; color: #888888; margin-bottom: 1.8rem;
+  display: flex; align-items: center; gap: 0.4rem;
 }
 .lp-best strong { color: #555555; font-weight: 600; }
 
 /* Controls */
 .control-block { margin-bottom: 1.6rem; }
 .control-label {
-font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
-text-transform: uppercase; color: #888888; margin-bottom: 0.6rem;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #888888; margin-bottom: 0.6rem;
 }
 .query-pills { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.8rem; }
 .query-pill {
-font-size: 0.8rem; font-weight: 400; color: #555555;
-background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.15);
-padding: 0.45rem 0.85rem; cursor: pointer; transition: all 0.15s;
-text-align: left; border-radius: 2px;
+  font-size: 0.8rem; font-weight: 400; color: #555555;
+  background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.15);
+  padding: 0.45rem 0.85rem; cursor: pointer; transition: all 0.15s;
+  text-align: left; border-radius: 2px;
 }
 .query-pill:hover { background: rgba(255,255,255,0.95); border-color: rgba(0,0,0,0.3); }
-.query-pill.active { background: #ffffff; border-color: var(–accent, #4a90c4); color: var(–accent, #4a90c4); font-weight: 600; }
+.query-pill.active { background: #ffffff; border-color: var(--accent, #4a90c4); color: var(--accent, #4a90c4); font-weight: 600; }
 
 .query-input {
-width: 100%; padding: 0.65rem 0.8rem;
-background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.15);
-font-family: ‘Assistant’, sans-serif; font-size: 0.82rem; color: #333333;
-outline: none; resize: none; height: 62px; border-radius: 2px;
-transition: all 0.15s; margin-bottom: 0.7rem;
+  width: 100%; padding: 0.65rem 0.8rem;
+  background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.15);
+  font-family: 'Assistant', sans-serif; font-size: 0.82rem; color: #333333;
+  outline: none; resize: none; height: 62px; border-radius: 2px;
+  transition: all 0.15s; margin-bottom: 0.7rem;
 }
-.query-input:focus { background: white; border-color: var(–accent, #4a90c4); }
+.query-input:focus { background: white; border-color: var(--accent, #4a90c4); }
 .query-input::placeholder { color: #888888; }
 
 .btn-primary {
-width: 100%; padding: 0.7rem 1rem;
-background: var(–accent, #4a90c4); border: none; border-radius: 2px;
-font-family: ‘Assistant’, sans-serif; font-size: 0.82rem; font-weight: 700;
-color: white; cursor: pointer; transition: all 0.15s; margin-bottom: 0.4rem;
-letter-spacing: 0.02em;
+  width: 100%; padding: 0.7rem 1rem;
+  background: var(--accent, #4a90c4); border: none; border-radius: 2px;
+  font-family: 'Assistant', sans-serif; font-size: 0.82rem; font-weight: 700;
+  color: white; cursor: pointer; transition: all 0.15s; margin-bottom: 0.4rem;
+  letter-spacing: 0.02em;
 }
 .btn-primary:hover { filter: brightness(1.1); }
 .btn-secondary {
-width: 100%; padding: 0.6rem 1rem;
-background: transparent; border: 1px solid rgba(0,0,0,0.2); border-radius: 2px;
-font-family: ‘Assistant’, sans-serif; font-size: 0.78rem; font-weight: 400;
-color: #555555; cursor: pointer; transition: all 0.15s;
+  width: 100%; padding: 0.6rem 1rem;
+  background: transparent; border: 1px solid rgba(0,0,0,0.2); border-radius: 2px;
+  font-family: 'Assistant', sans-serif; font-size: 0.78rem; font-weight: 400;
+  color: #555555; cursor: pointer; transition: all 0.15s;
 }
 .btn-secondary:hover { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.35); }
 
 /* Step nav inside left panel */
 .step-progress { margin-bottom: 1.2rem; }
 .step-track-v {
-display: flex; flex-direction: column; gap: 0;
+  display: flex; flex-direction: column; gap: 0;
 }
 .step-item {
-display: flex; align-items: flex-start; gap: 0.75rem;
-padding: 0.55rem 0;
-border-left: 2px solid rgba(0,0,0,0.1);
-padding-left: 0.9rem; cursor: pointer;
-transition: all 0.2s;
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-left: 2px solid rgba(0,0,0,0.1);
+  padding-left: 0.9rem; cursor: pointer;
+  transition: all 0.2s;
 }
-.step-item.active { border-left-color: var(–accent, #4a90c4); }
-.step-item.done { border-left-color: var(–accent, #4a90c4); opacity: 0.5; }
+.step-item.active { border-left-color: var(--accent, #4a90c4); }
+.step-item.done { border-left-color: var(--accent, #4a90c4); opacity: 0.5; }
 .step-num {
-width: 20px; height: 20px; border-radius: 50%;
-background: rgba(0,0,0,0.1); display: flex; align-items: center;
-justify-content: center; font-size: 0.6rem; font-weight: 700;
-flex-shrink: 0; color: #888888; transition: all 0.2s;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(0,0,0,0.1); display: flex; align-items: center;
+  justify-content: center; font-size: 0.6rem; font-weight: 700;
+  flex-shrink: 0; color: #888888; transition: all 0.2s;
 }
-.step-item.active .step-num { background: var(–accent, #4a90c4); color: white; }
-.step-item.done .step-num { background: var(–accent, #4a90c4); color: white; }
+.step-item.active .step-num { background: var(--accent, #4a90c4); color: white; }
+.step-item.done .step-num { background: var(--accent, #4a90c4); color: white; }
 .step-name { font-size: 0.78rem; font-weight: 400; color: #888888; padding-top: 1px; transition: all 0.2s; }
 .step-item.active .step-name { color: #333333; font-weight: 600; }
 
 .explainer-box {
-background: rgba(255,255,255,0.6); border-radius: 3px;
-padding: 0.9rem 1rem; margin-bottom: 1rem;
-font-size: 0.82rem; font-weight: 300; color: #555555; line-height: 1.7;
+  background: rgba(255,255,255,0.6); border-radius: 3px;
+  padding: 0.9rem 1rem; margin-bottom: 1rem;
+  font-size: 0.82rem; font-weight: 300; color: #555555; line-height: 1.7;
 }
 .explainer-box strong { font-weight: 600; color: #333333; }
 
@@ -219,19 +230,19 @@ font-size: 0.82rem; font-weight: 300; color: #555555; line-height: 1.7;
 
 /* RIGHT PANEL — pure white canvas */
 .right-panel {
-flex: 1; background: #ffffff;
-display: flex; flex-direction: column;
-position: relative; overflow: visible;
+  flex: 1; background: #ffffff;
+  display: flex; flex-direction: column;
+  position: relative; overflow: visible;
 }
 .canvas-area {
-flex: 1; padding: 3rem 3rem 2rem;
-display: flex; flex-direction: column; justify-content: flex-start;
-min-height: 200px;
+  flex: 1; padding: 3rem 3rem 2rem;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  min-height: 200px;
 }
 .canvas-empty {
-flex: 1; display: flex; flex-direction: column;
-align-items: center; justify-content: center;
-color: #d0d0d0;
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: #d0d0d0;
 }
 .canvas-empty-icon { font-size: 3rem; margin-bottom: 0.8rem; opacity: 0.3; }
 .canvas-empty-text { font-size: 0.82rem; font-weight: 300; }
@@ -239,68 +250,68 @@ color: #d0d0d0;
 /* ── VISUALISATION COMPONENTS ── */
 .vis-section { margin-bottom: 2rem; }
 .vis-label {
-font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
-text-transform: uppercase; color: #aaaaaa; margin-bottom: 0.9rem;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #aaaaaa; margin-bottom: 0.9rem;
 }
 
 /* Chunk list */
 .chunk-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .chunk-row {
-display: flex; gap: 0.75rem; align-items: flex-start;
-opacity: 0; transform: translateX(-12px);
-transition: all 0.4s ease;
-font-size: 0.83rem; color: #555555; line-height: 1.6;
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  opacity: 0; transform: translateX(-12px);
+  transition: all 0.4s ease;
+  font-size: 0.83rem; color: #555555; line-height: 1.6;
 }
 .chunk-row.in { opacity: 1; transform: translateX(0); }
 .chunk-tag {
-font-size: 0.62rem; font-weight: 600; padding: 0.15rem 0.6rem;
-border-radius: 2rem; flex-shrink: 0; margin-top: 2px;
-white-space: nowrap;
+  font-size: 0.62rem; font-weight: 600; padding: 0.15rem 0.6rem;
+  border-radius: 2rem; flex-shrink: 0; margin-top: 2px;
+  white-space: nowrap;
 }
 
 /* Embed pairs */
 .embed-list { display: flex; flex-direction: column; gap: 1rem; }
 .embed-pair {
-display: grid; grid-template-columns: 1fr 32px 1fr; gap: 0;
-align-items: center; opacity: 0; transition: opacity 0.5s;
+  display: grid; grid-template-columns: 1fr 32px 1fr; gap: 0;
+  align-items: center; opacity: 0; transition: opacity 0.5s;
 }
 .embed-pair.in { opacity: 1; }
 .embed-src {
-padding: 0.65rem 0.9rem; background: #f9f9f9;
-border: 1px solid #ebebeb; font-size: 0.78rem;
-color: #555555; line-height: 1.5;
+  padding: 0.65rem 0.9rem; background: #f9f9f9;
+  border: 1px solid #ebebeb; font-size: 0.78rem;
+  color: #555555; line-height: 1.5;
 }
 .embed-arrow { text-align: center; color: #cccccc; font-size: 1.1rem; }
 .embed-vec {
-padding: 0.65rem 0.9rem; border: 1px solid;
-font-family: ‘Courier New’, monospace; font-size: 0.68rem; line-height: 1.5;
+  padding: 0.65rem 0.9rem; border: 1px solid;
+  font-family: 'Courier New', monospace; font-size: 0.68rem; line-height: 1.5;
 }
 
 /* Similarity bars */
 .sim-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .sim-row {
-display: flex; align-items: center; gap: 0.9rem;
-padding: 0.5rem 0.8rem; background: #f9f9f9;
-opacity: 0; transition: opacity 0.4s;
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.5rem 0.8rem; background: #f9f9f9;
+  opacity: 0; transition: opacity 0.4s;
 }
 .sim-row.in { opacity: 1; }
-.sim-row.winner { background: #fffbf3; outline: 2px solid var(–accent, #4a90c4); }
+.sim-row.winner { background: #fffbf3; outline: 2px solid var(--accent, #4a90c4); }
 .sim-txt { font-size: 0.75rem; color: #555555; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sim-bar { height: 6px; background: #e8e8e8; border-radius: 3px; width: 120px; flex-shrink: 0; overflow: hidden; }
 .sim-fill { height: 100%; border-radius: 3px; width: 0%; transition: width 1s ease; background: #cccccc; }
-.sim-row.winner .sim-fill { background: var(–accent, #4a90c4); }
+.sim-row.winner .sim-fill { background: var(--accent, #4a90c4); }
 .sim-pct { font-size: 0.72rem; width: 34px; text-align: right; flex-shrink: 0; color: #aaaaaa; }
-.sim-row.winner .sim-pct { color: var(–accent, #4a90c4); font-weight: 700; }
+.sim-row.winner .sim-pct { color: var(--accent, #4a90c4); font-weight: 700; }
 
 /* Retrieved */
 .retrieved {
-border-left: 4px solid var(–accent, #4a90c4);
-padding: 1.1rem 1.3rem; background: #fffbf3;
-margin-bottom: 0.6rem;
+  border-left: 4px solid var(--accent, #4a90c4);
+  padding: 1.1rem 1.3rem; background: #fffbf3;
+  margin-bottom: 0.6rem;
 }
 .ret-badge {
-font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
-text-transform: uppercase; color: var(–accent, #4a90c4); margin-bottom: 0.5rem;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--accent, #4a90c4); margin-bottom: 0.5rem;
 }
 .ret-body { font-size: 0.85rem; color: #333333; line-height: 1.7; }
 .ret-body .kw { font-weight: 700; }
@@ -308,10 +319,10 @@ text-transform: uppercase; color: var(–accent, #4a90c4); margin-bottom: 0.5rem
 
 /* Answer */
 .answer-box {
-border-left: 4px solid var(–accent, #4a90c4);
-padding: 1.1rem 1.3rem;
-font-size: 1rem; line-height: 1.8; color: #333333;
-font-style: italic; min-height: 50px; margin-bottom: 0.5rem;
+  border-left: 4px solid var(--accent, #4a90c4);
+  padding: 1.1rem 1.3rem;
+  font-size: 1rem; line-height: 1.8; color: #333333;
+  font-style: italic; min-height: 50px; margin-bottom: 0.5rem;
 }
 .answer-meta { font-size: 0.72rem; color: #888888; }
 .answer-meta span { font-weight: 600; color: #555555; }
@@ -319,10 +330,10 @@ font-style: italic; min-height: 50px; margin-bottom: 0.5rem;
 /* Vectorless */
 .idx-list { display: flex; flex-direction: column; gap: 0.45rem; }
 .idx-row {
-display: flex; gap: 0.75rem; align-items: flex-start;
-padding: 0.6rem 0.8rem; background: #f9f9f9;
-opacity: 0; transform: translateY(6px); transition: all 0.35s;
-font-size: 0.8rem; color: #555555; line-height: 1.6;
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  padding: 0.6rem 0.8rem; background: #f9f9f9;
+  opacity: 0; transform: translateY(6px); transition: all 0.35s;
+  font-size: 0.8rem; color: #555555; line-height: 1.6;
 }
 .idx-row.in { opacity: 1; transform: translateY(0); }
 .idx-kw { font-weight: 700; }
@@ -332,65 +343,65 @@ font-size: 0.8rem; color: #555555; line-height: 1.6;
 .expand-step.in { opacity: 1; transform: translateY(0); }
 .expand-lbl { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #aaaaaa; margin-bottom: 0.35rem; }
 .expand-box {
-padding: 0.7rem 0.9rem; background: #f9f9f9;
-border: 1px solid #ebebeb; font-size: 0.82rem; color: #555555; line-height: 1.6;
+  padding: 0.7rem 0.9rem; background: #f9f9f9;
+  border: 1px solid #ebebeb; font-size: 0.82rem; color: #555555; line-height: 1.6;
 }
-.expand-box.highlighted { background: #fffbf3; border-color: var(–accent, #4a90c4); color: var(–accent, #4a90c4); font-weight: 600; font-family: ‘Courier New’, monospace; font-size: 0.75rem; }
+.expand-box.highlighted { background: #fffbf3; border-color: var(--accent, #4a90c4); color: var(--accent, #4a90c4); font-weight: 600; font-family: 'Courier New', monospace; font-size: 0.75rem; }
 .expand-divider {
-text-align: center; font-size: 0.68rem; color: #bbbbbb;
-display: flex; align-items: center; gap: 0.6rem;
+  text-align: center; font-size: 0.68rem; color: #bbbbbb;
+  display: flex; align-items: center; gap: 0.6rem;
 }
-.expand-divider::before, .expand-divider::after { content: ‘’; flex: 1; height: 1px; background: #ebebeb; }
+.expand-divider::before, .expand-divider::after { content: ''; flex: 1; height: 1px; background: #ebebeb; }
 .kw-cloud { display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.7rem 0.8rem; background: #f9f9f9; min-height: 42px; }
 .kw-pill {
-font-size: 0.72rem; padding: 0.2rem 0.65rem; border-radius: 2rem;
-border: 1px solid; font-weight: 600;
-opacity: 0; transform: scale(0.8); transition: all 0.25s;
+  font-size: 0.72rem; padding: 0.2rem 0.65rem; border-radius: 2rem;
+  border: 1px solid; font-weight: 600;
+  opacity: 0; transform: scale(0.8); transition: all 0.25s;
 }
 .kw-pill.in { opacity: 1; transform: scale(1); }
 
 .bm25-list { display: flex; flex-direction: column; gap: 0.4rem; }
 .bm25-row {
-padding: 0.6rem 0.8rem; background: #f9f9f9;
-opacity: 0; transform: translateX(-6px); transition: all 0.35s;
+  padding: 0.6rem 0.8rem; background: #f9f9f9;
+  opacity: 0; transform: translateX(-6px); transition: all 0.35s;
 }
 .bm25-row.in { opacity: 1; transform: translateX(0); }
-.bm25-row.winner { background: #fffbf3; outline: 2px solid var(–accent, #4a90c4); }
+.bm25-row.winner { background: #fffbf3; outline: 2px solid var(--accent, #4a90c4); }
 .bm25-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.4rem; }
 .bm25-clause { font-size: 0.75rem; color: #555555; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bm25-score { font-size: 0.72rem; color: #aaaaaa; white-space: nowrap; }
-.bm25-row.winner .bm25-score { color: var(–accent, #4a90c4); font-weight: 700; }
+.bm25-row.winner .bm25-score { color: var(--accent, #4a90c4); font-weight: 700; }
 .bm25-hits { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.4rem; }
 .ht { font-size: 0.65rem; padding: 0.1rem 0.45rem; border-radius: 2rem; }
-.ht.match { background: #fffbf3; border: 1px solid var(–accent, #4a90c4); color: var(–accent, #4a90c4); font-weight: 600; }
+.ht.match { background: #fffbf3; border: 1px solid var(--accent, #4a90c4); color: var(--accent, #4a90c4); font-weight: 600; }
 .ht.miss { background: #f0f0f0; border: 1px solid #e0e0e0; color: #bbbbbb; text-decoration: line-through; }
 .bm25-bar-outer { height: 4px; background: #e8e8e8; border-radius: 2px; overflow: hidden; }
 .bm25-bar-fill { height: 100%; width: 0%; transition: width 0.8s ease; background: #cccccc; border-radius: 2px; }
-.bm25-row.winner .bm25-bar-fill { background: var(–accent, #4a90c4); }
+.bm25-row.winner .bm25-bar-fill { background: var(--accent, #4a90c4); }
 
 /* Graph */
 .doc-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .doc-sent {
-padding: 0.6rem 0.8rem; background: #f9f9f9;
-font-size: 0.82rem; color: #555555; line-height: 1.6;
-opacity: 0; transform: translateX(-8px); transition: all 0.4s;
+  padding: 0.6rem 0.8rem; background: #f9f9f9;
+  font-size: 0.82rem; color: #555555; line-height: 1.6;
+  opacity: 0; transform: translateX(-8px); transition: all 0.4s;
 }
 .doc-sent.in { opacity: 1; transform: translateX(0); }
 .ent { font-weight: 700; }
 .rel { font-style: italic; }
 .extract-row {
-display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center;
-padding: 0.4rem 0.8rem; background: white; border-top: 1px solid #f0f0f0;
-opacity: 0; transition: opacity 0.3s;
+  display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center;
+  padding: 0.4rem 0.8rem; background: white; border-top: 1px solid #f0f0f0;
+  opacity: 0; transition: opacity 0.3s;
 }
 .extract-row.in { opacity: 1; }
 .ext-e {
-font-size: 0.65rem; padding: 0.1rem 0.5rem; border-radius: 2px;
-font-weight: 600; border: 1px solid;
+  font-size: 0.65rem; padding: 0.1rem 0.5rem; border-radius: 2px;
+  font-weight: 600; border: 1px solid;
 }
 .ext-r {
-font-size: 0.62rem; padding: 0.1rem 0.5rem; border-radius: 2px;
-border: 1px solid; font-style: italic;
+  font-size: 0.62rem; padding: 0.1rem 0.5rem; border-radius: 2px;
+  border: 1px solid; font-style: italic;
 }
 
 /* Graph canvas */
@@ -400,10 +411,10 @@ border: 1px solid; font-style: italic;
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 .graph-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.55rem; }
 .gnode {
-padding: 0.32rem 0.75rem; border: 2px solid #e0e0e0;
-font-size: 0.72rem; color: #555555; background: white;
-border-radius: 3px; opacity: 0; transform: scale(0.88);
-transition: all 0.4s; white-space: nowrap;
+  padding: 0.32rem 0.75rem; border: 2px solid #e0e0e0;
+  font-size: 0.72rem; color: #555555; background: white;
+  border-radius: 3px; opacity: 0; transform: scale(0.88);
+  transition: all 0.4s; white-space: nowrap;
 }
 .gnode.in { opacity: 1; transform: scale(1); }
 .gnode.traversed { font-weight: 700; }
@@ -413,19 +424,19 @@ transition: all 0.4s; white-space: nowrap;
 
 .ee-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .ee-card {
-padding: 0.7rem 0.9rem; background: #f9f9f9;
-font-size: 0.82rem; color: #555555; line-height: 1.6;
-opacity: 0; transform: translateY(5px); transition: all 0.35s;
+  padding: 0.7rem 0.9rem; background: #f9f9f9;
+  font-size: 0.82rem; color: #555555; line-height: 1.6;
+  opacity: 0; transform: translateY(5px); transition: all 0.35s;
 }
 .ee-card.in { opacity: 1; transform: translateY(0); }
 .ee-lbl { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #aaaaaa; margin-bottom: 0.3rem; }
 
 .trav-list { display: flex; flex-direction: column; gap: 0.4rem; }
 .trav-row {
-display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
-padding: 0.5rem 0.8rem; background: #f9f9f9;
-opacity: 0; transform: translateX(-6px); transition: all 0.35s;
-font-size: 0.78rem;
+  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+  padding: 0.5rem 0.8rem; background: #f9f9f9;
+  opacity: 0; transform: translateX(-6px); transition: all 0.35s;
+  font-size: 0.78rem;
 }
 .trav-row.in { opacity: 1; transform: translateX(0); }
 .trav-hop { font-size: 0.6rem; padding: 0.08rem 0.45rem; background: white; border: 1px solid #e0e0e0; flex-shrink: 0; border-radius: 2rem; color: #888888; }
@@ -436,29 +447,29 @@ font-size: 0.78rem;
 .trav-flag.caution { background: #fff8ea; border: 1px solid #ffcc88; color: #cc8800; }
 
 .subgraph-box {
-border: 2px solid var(–accent, #4a90c4); padding: 1.2rem; position: relative; margin-bottom: 0.7rem;
+  border: 2px solid var(--accent, #4a90c4); padding: 1.2rem; position: relative; margin-bottom: 0.7rem;
 }
-.sg-label { position: absolute; top: -11px; left: 1rem; background: var(–accent, #4a90c4); color: white; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.1rem 0.65rem; border-radius: 2rem; }
+.sg-label { position: absolute; top: -11px; left: 1rem; background: var(--accent, #4a90c4); color: white; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.1rem 0.65rem; border-radius: 2rem; }
 .sg-nodes, .sg-edges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.5rem; align-items: center; }
 .sg-rl { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #aaaaaa; }
-.sg-n { font-size: 0.7rem; padding: 0.15rem 0.55rem; border: 1px solid var(–accent, #4a90c4); border-radius: 2px; font-weight: 600; }
+.sg-n { font-size: 0.7rem; padding: 0.15rem 0.55rem; border: 1px solid var(--accent, #4a90c4); border-radius: 2px; font-weight: 600; }
 .sg-e { font-size: 0.7rem; padding: 0.15rem 0.55rem; border: 1px solid; border-radius: 2px; font-style: italic; }
 
 /* Agentic */
 .agent-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .agent-card {
-padding: 0.7rem 0.9rem; background: #f9f9f9;
-opacity: 0; transform: translateY(4px); transition: all 0.35s;
+  padding: 0.7rem 0.9rem; background: #f9f9f9;
+  opacity: 0; transform: translateY(4px); transition: all 0.35s;
 }
 .agent-card.in { opacity: 1; transform: translateY(0); }
 .ac-lbl { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #aaaaaa; margin-bottom: 0.3rem; }
 .ac-body { font-size: 0.82rem; color: #555555; line-height: 1.6; }
 .plan-rows { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.35rem; }
 .plan-row {
-display: flex; gap: 0.6rem; padding: 0.4rem 0.75rem;
-background: white; border: 1px solid #f0f0f0;
-font-size: 0.77rem; color: #555555; opacity: 0;
-transform: translateX(-5px); transition: all 0.3s;
+  display: flex; gap: 0.6rem; padding: 0.4rem 0.75rem;
+  background: white; border: 1px solid #f0f0f0;
+  font-size: 0.77rem; color: #555555; opacity: 0;
+  transform: translateX(-5px); transition: all 0.3s;
 }
 .plan-row.in { opacity: 1; transform: translateX(0); }
 .plan-num { font-weight: 700; flex-shrink: 0; }
@@ -466,25 +477,25 @@ transform: translateX(-5px); transition: all 0.3s;
 
 .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
 .tool-card {
-padding: 0.9rem; background: #f9f9f9; text-align: center;
-opacity: 0; transform: scale(0.9); transition: all 0.3s;
+  padding: 0.9rem; background: #f9f9f9; text-align: center;
+  opacity: 0; transform: scale(0.9); transition: all 0.3s;
 }
 .tool-card.in { opacity: 1; transform: scale(1); }
-.tool-card.selected { background: #fffbf3; outline: 2px solid var(–accent, #4a90c4); }
+.tool-card.selected { background: #fffbf3; outline: 2px solid var(--accent, #4a90c4); }
 .tool-icon { font-size: 1.4rem; margin-bottom: 0.35rem; }
 .tool-name { font-size: 0.72rem; font-weight: 700; margin-bottom: 0.2rem; color: #333333; }
-.tool-card.selected .tool-name { color: var(–accent, #4a90c4); }
+.tool-card.selected .tool-name { color: var(--accent, #4a90c4); }
 .tool-desc { font-size: 0.63rem; color: #888888; line-height: 1.4; }
-.tool-badge { font-size: 0.58rem; margin-top: 0.3rem; padding: 0.1rem 0.5rem; background: #fffbf3; border: 1px solid var(–accent, #4a90c4); color: var(–accent, #4a90c4); border-radius: 2rem; display: inline-block; }
+.tool-badge { font-size: 0.58rem; margin-top: 0.3rem; padding: 0.1rem 0.5rem; background: #fffbf3; border: 1px solid var(--accent, #4a90c4); color: var(--accent, #4a90c4); border-radius: 2rem; display: inline-block; }
 
 .sq-list { display: flex; flex-direction: column; gap: 0.45rem; }
 .sq-row {
-padding: 0.6rem 0.8rem; background: #f9f9f9;
-opacity: 0; transform: translateX(-5px); transition: all 0.35s;
+  padding: 0.6rem 0.8rem; background: #f9f9f9;
+  opacity: 0; transform: translateX(-5px); transition: all 0.35s;
 }
 .sq-row.in { opacity: 1; transform: translateX(0); }
 .sq-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
-.sq-num { font-size: 0.62rem; font-weight: 700; padding: 0.1rem 0.45rem; border: 1px solid var(–accent, #4a90c4); color: var(–accent, #4a90c4); border-radius: 2px; }
+.sq-num { font-size: 0.62rem; font-weight: 700; padding: 0.1rem 0.45rem; border: 1px solid var(--accent, #4a90c4); color: var(--accent, #4a90c4); border-radius: 2px; }
 .sq-tool { font-size: 0.62rem; padding: 0.1rem 0.45rem; border: 1px solid #7bb0e0; color: #4a80cc; border-radius: 2px; }
 .sq-status { margin-left: auto; font-size: 0.65rem; font-weight: 700; }
 .sq-status.ok { color: #4caf7d; }
@@ -494,10 +505,10 @@ opacity: 0; transform: translateX(-5px); transition: all 0.35s;
 
 .mem-list { display: flex; flex-direction: column; gap: 0.4rem; }
 .mem-row {
-display: flex; gap: 0.6rem; align-items: flex-start;
-padding: 0.55rem 0.8rem;
-opacity: 0; transform: translateY(3px); transition: all 0.35s;
-font-size: 0.79rem; line-height: 1.5;
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  padding: 0.55rem 0.8rem;
+  opacity: 0; transform: translateY(3px); transition: all 0.35s;
+  font-size: 0.79rem; line-height: 1.5;
 }
 .mem-row.in { opacity: 1; transform: translateY(0); }
 .mem-row.k { background: #f0faf5; border-left: 3px solid #4caf7d; color: #555555; }
@@ -509,9 +520,9 @@ font-size: 0.79rem; line-height: 1.5;
 
 .conf-list { display: flex; flex-direction: column; gap: 0.4rem; }
 .conf-row {
-display: flex; align-items: center; gap: 0.8rem;
-padding: 0.5rem 0.8rem; background: #f9f9f9;
-opacity: 0; transition: opacity 0.35s;
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.5rem 0.8rem; background: #f9f9f9;
+  opacity: 0; transition: opacity 0.35s;
 }
 .conf-row.in { opacity: 1; }
 .conf-row.pass { border-left: 3px solid #4caf7d; }
@@ -529,35 +540,35 @@ opacity: 0; transition: opacity 0.35s;
 .conf-verdict.fail { background: #ffeaea; border: 1px solid #e05050; color: #cc3333; }
 
 .retry-log {
-background: #f9f9f9; padding: 0.9rem 1rem;
-font-family: ‘Courier New’, monospace; font-size: 0.72rem;
-max-height: 200px; overflow-y: auto;
-display: flex; flex-direction: column; gap: 0.25rem; line-height: 1.7;
+  background: #f9f9f9; padding: 0.9rem 1rem;
+  font-family: 'Courier New', monospace; font-size: 0.72rem;
+  max-height: 200px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 0.25rem; line-height: 1.7;
 }
 .rlog { display: flex; gap: 0.5rem; opacity: 0; transition: opacity 0.25s; }
 .rlog.in { opacity: 1; }
 .rlog-txt.retry { color: #e05050; }
-.rlog-txt.action { color: var(–accent, #4a90c4); }
+.rlog-txt.action { color: var(--accent, #4a90c4); }
 .rlog-txt.info { color: #4a80cc; }
 .rlog-txt.success { color: #4caf7d; font-weight: 700; }
 .rlog-txt { color: #555555; }
 
 .synth-list { display: flex; flex-direction: column; gap: 0.45rem; }
 .synth-row {
-display: flex; gap: 0.7rem; align-items: flex-start;
-padding: 0.6rem 0.8rem; background: #f9f9f9;
-opacity: 0; transform: translateX(-5px); transition: all 0.35s;
-font-size: 0.79rem; color: #555555; line-height: 1.55;
+  display: flex; gap: 0.7rem; align-items: flex-start;
+  padding: 0.6rem 0.8rem; background: #f9f9f9;
+  opacity: 0; transform: translateX(-5px); transition: all 0.35s;
+  font-size: 0.79rem; color: #555555; line-height: 1.55;
 }
 .synth-row.in { opacity: 1; transform: translateX(0); }
 .synth-badge { font-size: 0.6rem; padding: 0.1rem 0.5rem; flex-shrink: 0; margin-top: 1px; border-radius: 2px; font-weight: 700; }
-.synth-badge.sq { border: 1px solid var(–accent, #4a90c4); color: var(–accent, #4a90c4); }
+.synth-badge.sq { border: 1px solid var(--accent, #4a90c4); color: var(--accent, #4a90c4); }
 .synth-badge.retry { border: 1px solid #4a80cc; color: #4a80cc; }
 .synth-ground {
-display: flex; gap: 0.6rem; align-items: center;
-padding: 0.6rem 0.8rem; background: #f0faf5; border-left: 3px solid #4caf7d;
-font-size: 0.79rem; color: #3a9966; margin-top: 0.35rem;
-opacity: 0; transition: opacity 0.4s;
+  display: flex; gap: 0.6rem; align-items: center;
+  padding: 0.6rem 0.8rem; background: #f0faf5; border-left: 3px solid #4caf7d;
+  font-size: 0.79rem; color: #3a9966; margin-top: 0.35rem;
+  opacity: 0; transition: opacity 0.4s;
 }
 .synth-ground.in { opacity: 1; }
 
@@ -565,14 +576,14 @@ opacity: 0; transition: opacity 0.4s;
 .src-chip { font-size: 0.72rem; padding: 0.18rem 0.65rem; border: 1px solid #e0e0e0; color: #888888; background: #f9f9f9; border-radius: 2px; }
 
 .vs-note {
-background: #f9f9f9; border-left: 3px solid #cccccc;
-padding: 0.7rem 0.9rem; font-size: 0.78rem; color: #555555; line-height: 1.6; margin-top: 0.6rem;
+  background: #f9f9f9; border-left: 3px solid #cccccc;
+  padding: 0.7rem 0.9rem; font-size: 0.78rem; color: #555555; line-height: 1.6; margin-top: 0.6rem;
 }
 .vs-note strong { font-weight: 700; color: #333333; }
 
 /* ── QUIZ SECTION ── */
 .quiz-section {
-background: #f4f4f0; padding: 4rem 2rem;
+  background: #f4f4f0; padding: 4rem 2rem;
 }
 .quiz-inner { max-width: 700px; margin: 0 auto; }
 .quiz-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; color: #333333; }
@@ -587,8 +598,8 @@ background: #f4f4f0; padding: 4rem 2rem;
 .qs-q { font-size: 1.4rem; font-weight: 700; color: #333333; margin-bottom: 1.5rem; line-height: 1.3; }
 .qs-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
 .qs-opt {
-border: 1px solid #e0e0e0; padding: 1rem; cursor: pointer;
-transition: all 0.15s; background: white; text-align: left;
+  border: 1px solid #e0e0e0; padding: 1rem; cursor: pointer;
+  transition: all 0.15s; background: white; text-align: left;
 }
 .qs-opt:hover { border-color: #e8a838; background: #fffbf3; }
 .opt-title { font-size: 0.82rem; font-weight: 700; color: #333333; margin-bottom: 0.3rem; }
@@ -602,84 +613,84 @@ transition: all 0.15s; background: white; text-align: left;
 .res-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
 .res-tag { font-size: 0.75rem; padding: 0.2rem 0.65rem; border: 1px solid #e0e0e0; color: #555555; }
 .btn-quiz-restart {
-font-size: 0.78rem; padding: 0.55rem 1.3rem;
-border: 1px solid #e0e0e0; background: white; cursor: pointer;
-color: #555555; transition: all 0.15s; font-family: ‘Assistant’, sans-serif;
+  font-size: 0.78rem; padding: 0.55rem 1.3rem;
+  border: 1px solid #e0e0e0; background: white; cursor: pointer;
+  color: #555555; transition: all 0.15s; font-family: 'Assistant', sans-serif;
 }
 .btn-quiz-restart:hover { border-color: #e8a838; color: #e8a838; }
 
 /* ── FOOTER ── */
 footer {
-background: #2d2d3f; color: rgba(255,255,255,0.5);
-padding: 1.8rem 2rem; display: flex; justify-content: space-between;
-align-items: center; flex-wrap: wrap; gap: 1rem;
-font-size: 0.75rem;
+  background: #2d2d3f; color: rgba(255,255,255,0.5);
+  padding: 1.8rem 2rem; display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.75rem;
 }
 footer span { color: rgba(255,255,255,0.8); }
 
 /* ── STICKY MOBILE NAV BAR ── */
 .mobile-step-bar {
-display: none;
-position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
-background: white; border-top: 1px solid #e0e0e0;
-padding: 0.75rem 1rem;
-flex-direction: row; align-items: center; gap: 0.6rem;
-box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+  background: white; border-top: 1px solid #e0e0e0;
+  padding: 0.75rem 1rem;
+  flex-direction: row; align-items: center; gap: 0.6rem;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
 }
 .mobile-step-bar.visible { display: flex; }
 .msb-hint {
-font-size: 0.72rem; color: #aaaaaa; flex: 1;
-font-family: ‘Assistant’, sans-serif; line-height: 1.3;
+  font-size: 0.72rem; color: #aaaaaa; flex: 1;
+  font-family: 'Assistant', sans-serif; line-height: 1.3;
 }
 .msb-restart {
-padding: 0.55rem 0.9rem; border: 1px solid #e0e0e0;
-background: white; font-family: ‘Assistant’, sans-serif;
-font-size: 0.75rem; color: #888; cursor: pointer;
-border-radius: 2px; white-space: nowrap; flex-shrink: 0;
+  padding: 0.55rem 0.9rem; border: 1px solid #e0e0e0;
+  background: white; font-family: 'Assistant', sans-serif;
+  font-size: 0.75rem; color: #888; cursor: pointer;
+  border-radius: 2px; white-space: nowrap; flex-shrink: 0;
 }
 .msb-next {
-padding: 0.65rem 1.3rem; border: none;
-font-family: ‘Assistant’, sans-serif; font-size: 0.82rem; font-weight: 700;
-color: white; cursor: pointer; border-radius: 2px;
-white-space: nowrap; flex-shrink: 0; transition: opacity 0.15s;
-letter-spacing: 0.02em;
+  padding: 0.65rem 1.3rem; border: none;
+  font-family: 'Assistant', sans-serif; font-size: 0.82rem; font-weight: 700;
+  color: white; cursor: pointer; border-radius: 2px;
+  white-space: nowrap; flex-shrink: 0; transition: opacity 0.15s;
+  letter-spacing: 0.02em;
 }
 .msb-next:hover { opacity: 0.88; }
 /* Space at bottom of canvas so content not hidden behind bar */
-/* canvas-area bottom set per breakpoint */
+/* canvas-area padding managed per section */
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-body { padding-bottom: 72px; }
-.chapter-section { flex-direction: column; min-height: auto; }
-.left-panel { width: 100%; min-height: auto; padding: 2rem 1.2rem 1.5rem; }
-.right-panel { min-height: 0; overflow: visible; }
-.canvas-area { padding: 1.5rem 1.2rem 6rem; min-height: 0; }
-.chapter-cards { grid-template-columns: 1fr 1fr; }
-.nav-links { display: none; }
-.qs-opts { grid-template-columns: 1fr; }
-.home-section { padding: 3rem 1.2rem 0; }
-.lp-title { font-size: 1.6rem; }
-/* Hide the in-panel next/restart/hint on mobile — sticky bar handles them */
-.mobile-hide { display: none !important; }
-.mobile-step-bar { display: none; }
-.mobile-step-bar.visible { display: flex; }
-/* Tighter chapter cards on very small screens */
-.cc-title { font-size: 0.85rem; }
-.cc-desc { display: none; }
+  body { padding-bottom: 72px; }
+  .chapter-section { flex-direction: column; min-height: auto; }
+  .left-panel { width: 100%; min-height: auto; padding: 2rem 1.2rem 1.5rem; }
+  .right-panel { min-height: 0; overflow: visible; }
+  .canvas-area { padding: 1.5rem 1.2rem 6rem; min-height: 0; }
+  .chapter-cards { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+  .qs-opts { grid-template-columns: 1fr; }
+  .home-section { padding: 3rem 1.2rem 0; }
+  .lp-title { font-size: 1.6rem; }
+  /* Hide the in-panel next/restart/hint on mobile — sticky bar handles them */
+  .mobile-hide { display: none !important; }
+  .mobile-step-bar { display: none; }
+  .mobile-step-bar.visible { display: flex; }
+  /* Tighter chapter cards on very small screens */
+  .cc-title { font-size: 0.85rem; }
+  .cc-desc { display: none; }
 }
 
 @media (max-width: 400px) {
-.chapter-cards { grid-template-columns: 1fr; }
+  .chapter-cards { grid-template-columns: 1fr; }
 }
 
 /* ── CHAPTER-SPECIFIC ACCENT COLOURS ── */
 /* Defined explicitly per class so Safari/iOS handles them correctly */
 
-.ch1-section { –accent: #4a90c4; }
-.ch2-section { –accent: #e8a838; }
-.ch3-section { –accent: #4caf7d; }
-.ch4-section { –accent: #9b6fc4; }
+.ch1-section { --accent: #4a90c4; }
+.ch2-section { --accent: #e8a838; }
+.ch3-section { --accent: #4caf7d; }
+.ch4-section { --accent: #9b6fc4; }
 
 /* btn-primary per chapter */
 .ch1-section .btn-primary { background: #4a90c4; }
@@ -755,12 +766,73 @@ body { padding-bottom: 72px; }
 .ch1-section .embed-vec { color: #4a90c4; background: #e8f3fc; border-color: #4a90c4; }
 .ch2-section .embed-vec { color: #e8a838; background: #fffbf3; border-color: #e8a838; }
 
+
+/* ── DESKTOP: right panel layout with query on top ── */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Query zone — top of right panel, white, subtle bottom border */
+.right-query {
+  padding: 2rem 2.5rem 1.5rem;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+.right-query .control-label {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #888888; margin-bottom: 0.7rem;
+}
+.right-query .query-pills {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem;
+}
+.right-query .query-pill {
+  font-size: 0.78rem; font-weight: 400; color: #555555;
+  background: #f9f9f9; border: 1px solid #e0e0e0;
+  padding: 0.35rem 0.8rem; cursor: pointer;
+  transition: all 0.15s; border-radius: 2px;
+}
+.right-query .query-pill:hover { background: white; border-color: #aaaaaa; }
+.right-query .query-input {
+  width: 100%; padding: 0.65rem 0.9rem;
+  background: #f9f9f9; border: 1px solid #e0e0e0;
+  font-family: 'Assistant', sans-serif; font-size: 0.82rem; color: #333333;
+  outline: none; resize: none; height: 56px; border-radius: 2px;
+  transition: all 0.15s; margin-bottom: 0.7rem;
+}
+.right-query .query-input:focus { background: white; }
+.right-query .btn-start {
+  padding: 0.65rem 2rem; border: none; cursor: pointer;
+  font-family: 'Assistant', sans-serif; font-size: 0.82rem;
+  font-weight: 700; color: white; transition: opacity 0.15s;
+  border-radius: 2px; letter-spacing: 0.02em;
+}
+.right-query .btn-start:hover { opacity: 0.88; }
+
+/* Canvas area fills remaining space */
+.canvas-area {
+  flex: 1;
+  padding: 2rem 2.5rem 3rem;
+}
+
+/* Left panel on desktop: hide query controls, show only text + step info */
+@media (min-width: 769px) {
+  .left-query { display: none; }
+  .left-panel { min-height: 100vh; }
+}
+
+/* Mobile: show query in left panel, hide right-query */
+@media (max-width: 768px) {
+  .right-query { display: none; }
+  .left-query { display: block; }
+  .canvas-area { padding: 1.5rem 1.2rem 6rem; }
+}
+
 </style>
 </head>
 <body>
 
 <!-- STICKY MOBILE STEP BAR -->
-
 <div class="mobile-step-bar" id="msb">
   <span class="msb-hint" id="msb-hint">Select a question to begin</span>
   <button class="msb-restart" id="msb-restart" onclick="msbRestart()" style="display:none">↺</button>
@@ -768,7 +840,6 @@ body { padding-bottom: 72px; }
 </div>
 
 <!-- NAV -->
-
 <nav>
   <div class="nav-brand">≡ RAG Explorer</div>
   <div class="nav-links">
@@ -782,7 +853,6 @@ body { padding-bottom: 72px; }
 </nav>
 
 <!-- HOME -->
-
 <section style="background:#2d2d3f;color:white;padding:4.5rem 2rem 0;text-align:center;">
   <div class="home-eyebrow">A visual introduction to AI retrieval</div>
   <h1 class="home-title">How does AI <em>actually find</em> its answers?</h1>
@@ -823,42 +893,50 @@ body { padding-bottom: 72px; }
   CHAPTER 1 — TRADITIONAL RAG
   Background: powder blue #c8dce8
 ════════════════════════════════════ -->
-
 <section class="chapter-section ch1-section" id="ch1">
   <div class="left-panel" style="background:#c8dce8">
     <div class="lp-chapter-label">Chapter 1</div>
     <h2 class="lp-title">Traditional RAG</h2>
-    <p class="lp-desc">Your question is converted into a <strong>vector</strong> — a mathematical fingerprint of its meaning. That fingerprint is compared against all document chunks to find the closest semantic match.</p>
-    <p class="lp-desc">Step through the process and watch exactly how every stage works.</p>
-    <div class="lp-best">Best for: <strong>FAQ & Knowledge Bases</strong></div>
+    <p class="lp-desc">Your question is converted into a <strong>vector</strong> — a mathematical fingerprint of its meaning. That fingerprint is compared against all document chunks to find the closest semantic match.<br><br>Step through the process and watch exactly how every stage works.</p>
+    <div class="lp-best">Best for: <strong>FAQ &amp; Knowledge Bases</strong></div>
 
-```
-<div class="control-block">
-  <div class="control-label">Choose a question</div>
-  <div class="query-pills">
-    <button class="query-pill" onclick="tSetPill(this,'Can I work from home?')">Can I work from home?</button>
-    <button class="query-pill" onclick="tSetPill(this,'How many days of annual leave do I get?')">How many annual leave days?</button>
-    <button class="query-pill" onclick="tSetPill(this,'What is the notice period if I resign?')">What is the notice period?</button>
-    <button class="query-pill" onclick="tSetPill(this,'What is my training budget?')">What is my training budget?</button>
-  </div>
-  <textarea class="query-input" id="t-qinput" placeholder="Or type your own HR policy question…"></textarea>
-  <button class="btn-primary" style="background:#4a90c4" onclick="tStart()">▶ Start</button>
-</div>
+    <!-- Mobile only query (shown below on small screens) -->
+    <div class="left-query control-block">
+      <div class="control-label">Choose a question about the HR policy</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="tSetPill(this,'Can I work from home?')">Can I work from home?</button>
+        <button class="query-pill" onclick="tSetPill(this,'How many days of annual leave do I get?')">How many annual leave days?</button>
+        <button class="query-pill" onclick="tSetPill(this,'What is the notice period if I resign?')">What is the notice period?</button>
+        <button class="query-pill" onclick="tSetPill(this,'What is my training budget?')">What is my training budget?</button>
+      </div>
+      <textarea class="query-input" id="t-qinput-m" oninput="document.getElementById('t-qinput').value=this.value" placeholder="Or type your own HR policy question…"></textarea>
+      <button class="btn-primary" style="background:#4a90c4" onclick="syncAndStart('t-qinput','t',this)">▶ Start</button>
+    </div>
 
-<div id="t-controls" style="display:none">
-  <div class="control-block">
-    <div class="control-label">Steps</div>
-    <div class="step-track-v" id="t-steps"></div>
-  </div>
-  <div class="explainer-box" id="t-exp"></div>
-  <button class="btn-primary mobile-hide" style="background:#4a90c4" id="t-nbtn" onclick="tNext()">Next Step →</button>
-  <button class="btn-secondary mobile-hide" onclick="tRestart()" style="margin-top:0.4rem">↺ Restart</button>
-  <p class="nav-hint mobile-hide" id="t-hint"></p>
-</div>
-```
-
+    <div id="t-controls" style="display:none">
+      <div class="control-block">
+        <div class="control-label">Steps</div>
+        <div class="step-track-v" id="t-steps"></div>
+      </div>
+      <div class="explainer-box" id="t-exp"></div>
+      <button class="btn-primary mobile-hide" style="background:#4a90c4" id="t-nbtn" onclick="tNext()">Next Step →</button>
+      <button class="btn-secondary mobile-hide" onclick="tRestart()" style="margin-top:0.4rem">↺ Restart</button>
+      <p class="nav-hint mobile-hide" id="t-hint"></p>
+    </div>
   </div>
   <div class="right-panel">
+    <!-- Desktop: query selection lives here, above the canvas -->
+    <div class="right-query">
+      <div class="control-label">Choose a question about the HR policy</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="tSetPill(this,'Can I work from home?')">Can I work from home?</button>
+        <button class="query-pill" onclick="tSetPill(this,'How many days of annual leave do I get?')">How many annual leave days?</button>
+        <button class="query-pill" onclick="tSetPill(this,'What is the notice period if I resign?')">What is the notice period?</button>
+        <button class="query-pill" onclick="tSetPill(this,'What is my training budget?')">What is my training budget?</button>
+      </div>
+      <textarea class="query-input" id="t-qinput" placeholder="Or type your own HR policy question…"></textarea>
+      <button class="btn-start" style="background:#4a90c4" onclick="tStart()">▶ Start</button>
+    </div>
     <div class="canvas-area" id="t-canvas">
       <div class="canvas-empty" id="t-empty">
         <div class="canvas-empty-icon">🔍</div>
@@ -872,42 +950,50 @@ body { padding-bottom: 72px; }
   CHAPTER 2 — VECTORLESS RAG
   Background: warm cream #f5e6d8
 ════════════════════════════════════ -->
-
 <section class="chapter-section ch2-section" id="ch2">
   <div class="left-panel" style="background:#f5e6d8">
     <div class="lp-chapter-label">Chapter 2</div>
     <h2 class="lp-title">Vectorless RAG</h2>
-    <p class="lp-desc">No embeddings. No vectors. An <strong>LLM expands your query</strong> into precise legal terminology, then BM25 scores every document by exact keyword frequency.</p>
-    <p class="lp-desc">When precise wording matters more than meaning, this wins.</p>
-    <div class="lp-best">Best for: <strong>Legal & Compliance</strong></div>
+    <p class="lp-desc">No embeddings. No vectors. An <strong>LLM expands your query</strong> into precise legal terminology, then BM25 scores every document by exact keyword frequency.<br><br>When precise wording matters more than meaning, this wins.</p>
+    <div class="lp-best">Best for: <strong>Legal &amp; Compliance</strong></div>
 
-```
-<div class="control-block">
-  <div class="control-label">Search the contract</div>
-  <div class="query-pills">
-    <button class="query-pill" onclick="vSetPill(this,'data retention period')">data retention period</button>
-    <button class="query-pill" onclick="vSetPill(this,'termination notice')">termination notice</button>
-    <button class="query-pill" onclick="vSetPill(this,'intellectual property ownership')">intellectual property ownership</button>
-    <button class="query-pill" onclick="vSetPill(this,'confidentiality obligations')">confidentiality obligations</button>
-  </div>
-  <textarea class="query-input" id="v-qinput" placeholder="Search for a contract clause…"></textarea>
-  <button class="btn-primary" style="background:#e8a838" onclick="vStart()">▶ Start</button>
-</div>
+    <!-- Mobile only query (shown below on small screens) -->
+    <div class="left-query control-block">
+      <div class="control-label">Search the service contract</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="vSetPill(this,'data retention period')">data retention period</button>
+        <button class="query-pill" onclick="vSetPill(this,'termination notice')">termination notice</button>
+        <button class="query-pill" onclick="vSetPill(this,'intellectual property ownership')">intellectual property ownership</button>
+        <button class="query-pill" onclick="vSetPill(this,'confidentiality obligations')">confidentiality obligations</button>
+      </div>
+      <textarea class="query-input" id="v-qinput-m" oninput="document.getElementById('v-qinput').value=this.value" placeholder="Search for a contract clause…"></textarea>
+      <button class="btn-primary" style="background:#e8a838" onclick="syncAndStart('v-qinput','v',this)">▶ Start</button>
+    </div>
 
-<div id="v-controls" style="display:none">
-  <div class="control-block">
-    <div class="control-label">Steps</div>
-    <div class="step-track-v" id="v-steps"></div>
-  </div>
-  <div class="explainer-box" id="v-exp"></div>
-  <button class="btn-primary mobile-hide" style="background:#e8a838" id="v-nbtn" onclick="vNext()">Next Step →</button>
-  <button class="btn-secondary mobile-hide" onclick="vRestart()" style="margin-top:0.4rem">↺ Restart</button>
-  <p class="nav-hint mobile-hide" id="v-hint"></p>
-</div>
-```
-
+    <div id="v-controls" style="display:none">
+      <div class="control-block">
+        <div class="control-label">Steps</div>
+        <div class="step-track-v" id="v-steps"></div>
+      </div>
+      <div class="explainer-box" id="v-exp"></div>
+      <button class="btn-primary mobile-hide" style="background:#e8a838" id="v-nbtn" onclick="vNext()">Next Step →</button>
+      <button class="btn-secondary mobile-hide" onclick="vRestart()" style="margin-top:0.4rem">↺ Restart</button>
+      <p class="nav-hint mobile-hide" id="v-hint"></p>
+    </div>
   </div>
   <div class="right-panel">
+    <!-- Desktop: query selection lives here, above the canvas -->
+    <div class="right-query">
+      <div class="control-label">Search the service contract</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="vSetPill(this,'data retention period')">data retention period</button>
+        <button class="query-pill" onclick="vSetPill(this,'termination notice')">termination notice</button>
+        <button class="query-pill" onclick="vSetPill(this,'intellectual property ownership')">intellectual property ownership</button>
+        <button class="query-pill" onclick="vSetPill(this,'confidentiality obligations')">confidentiality obligations</button>
+      </div>
+      <textarea class="query-input" id="v-qinput" placeholder="Search for a contract clause…"></textarea>
+      <button class="btn-start" style="background:#e8a838" onclick="vStart()">▶ Start</button>
+    </div>
     <div class="canvas-area" id="v-canvas">
       <div class="canvas-empty" id="v-empty">
         <div class="canvas-empty-icon">📋</div>
@@ -921,41 +1007,48 @@ body { padding-bottom: 72px; }
   CHAPTER 3 — GRAPH RAG
   Background: sage green #d4e8d4
 ════════════════════════════════════ -->
-
 <section class="chapter-section ch3-section" id="ch3">
   <div class="left-panel" style="background:#d4e8d4">
     <div class="lp-chapter-label">Chapter 3</div>
     <h2 class="lp-title">Graph RAG</h2>
-    <p class="lp-desc">An LLM reads documents and builds a <strong>knowledge graph</strong> — entities connected by labelled edges. Queries traverse this graph hop by hop.</p>
-    <p class="lp-desc">Best when the answer depends on who is connected to what.</p>
-    <div class="lp-best">Best for: <strong>Fraud & Risk Detection</strong></div>
+    <p class="lp-desc">An LLM reads documents and builds a <strong>knowledge graph</strong> — entities connected by labelled edges. Queries traverse this graph hop by hop.<br><br>Best when the answer depends on who is connected to what.</p>
+    <div class="lp-best">Best for: <strong>Fraud &amp; Risk Detection</strong></div>
 
-```
-<div class="control-block">
-  <div class="control-label">Investigate the network</div>
-  <div class="query-pills">
-    <button class="query-pill" onclick="gSetPill(this,'alpha')">Is Alpha Corp linked to any risk entities?</button>
-    <button class="query-pill" onclick="gSetPill(this,'director')">Who is James Wong connected to?</button>
-    <button class="query-pill" onclick="gSetPill(this,'transfers')">What accounts are in suspicious transfers?</button>
-  </div>
-  <textarea class="query-input" id="g-qinput" placeholder="Select a query above…" readonly></textarea>
-  <button class="btn-primary" style="background:#4caf7d" onclick="gStart()">▶ Start</button>
-</div>
+    <!-- Mobile only query (shown below on small screens) -->
+    <div class="left-query control-block">
+      <div class="control-label">Investigate the financial network</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="gSetPill(this,'alpha')">Is Alpha Corp linked to any risk entities?</button>
+        <button class="query-pill" onclick="gSetPill(this,'director')">Who is James Wong connected to?</button>
+        <button class="query-pill" onclick="gSetPill(this,'transfers')">What accounts are in suspicious transfers?</button>
+      </div>
+      <textarea class="query-input" id="g-qinput-m" oninput="document.getElementById('g-qinput').value=this.value" placeholder="Select a query above…"></textarea>
+      <button class="btn-primary" style="background:#4caf7d" onclick="syncAndStart('g-qinput','g',this)">▶ Start</button>
+    </div>
 
-<div id="g-controls" style="display:none">
-  <div class="control-block">
-    <div class="control-label">Steps</div>
-    <div class="step-track-v" id="g-steps"></div>
-  </div>
-  <div class="explainer-box" id="g-exp"></div>
-  <button class="btn-primary mobile-hide" style="background:#4caf7d" id="g-nbtn" onclick="gNext()">Next Step →</button>
-  <button class="btn-secondary mobile-hide" onclick="gRestart()" style="margin-top:0.4rem">↺ Restart</button>
-  <p class="nav-hint mobile-hide" id="g-hint"></p>
-</div>
-```
-
+    <div id="g-controls" style="display:none">
+      <div class="control-block">
+        <div class="control-label">Steps</div>
+        <div class="step-track-v" id="g-steps"></div>
+      </div>
+      <div class="explainer-box" id="g-exp"></div>
+      <button class="btn-primary mobile-hide" style="background:#4caf7d" id="g-nbtn" onclick="gNext()">Next Step →</button>
+      <button class="btn-secondary mobile-hide" onclick="gRestart()" style="margin-top:0.4rem">↺ Restart</button>
+      <p class="nav-hint mobile-hide" id="g-hint"></p>
+    </div>
   </div>
   <div class="right-panel">
+    <!-- Desktop: query selection lives here, above the canvas -->
+    <div class="right-query">
+      <div class="control-label">Investigate the financial network</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="gSetPill(this,'alpha')">Is Alpha Corp linked to any risk entities?</button>
+        <button class="query-pill" onclick="gSetPill(this,'director')">Who is James Wong connected to?</button>
+        <button class="query-pill" onclick="gSetPill(this,'transfers')">What accounts are in suspicious transfers?</button>
+      </div>
+      <textarea class="query-input" id="g-qinput" placeholder="Select a query above…"></textarea>
+      <button class="btn-start" style="background:#4caf7d" onclick="gStart()">▶ Start</button>
+    </div>
     <div class="canvas-area" id="g-canvas">
       <div class="canvas-empty" id="g-empty">
         <div class="canvas-empty-icon">🕸</div>
@@ -969,41 +1062,48 @@ body { padding-bottom: 72px; }
   CHAPTER 4 — AGENTIC RAG
   Background: soft lavender #e8daf0
 ════════════════════════════════════ -->
-
 <section class="chapter-section ch4-section" id="ch4">
   <div class="left-panel" style="background:#e8daf0">
     <div class="lp-chapter-label">Chapter 4</div>
     <h2 class="lp-title">Agentic RAG</h2>
-    <p class="lp-desc">An AI agent <strong>plans, selects tools, executes sub-queries, validates confidence, retries when weak</strong>, grounds the answer, and only then responds.</p>
-    <p class="lp-desc">The most powerful pattern — and the most expensive.</p>
+    <p class="lp-desc">An AI agent <strong>plans, selects tools, executes sub-queries, validates confidence, retries when weak</strong>, grounds the answer, and only then responds.<br><br>The most powerful pattern — and the most expensive.</p>
     <div class="lp-best">Best for: <strong>Complex Research</strong></div>
 
-```
-<div class="control-block">
-  <div class="control-label">Give the agent a task</div>
-  <div class="query-pills">
-    <button class="query-pill" onclick="aSetPill(this,'risk')">What are the key risks in our Q3 report vs benchmarks?</button>
-    <button class="query-pill" onclick="aSetPill(this,'market')">Summarise competitor pricing and recommend positioning.</button>
-    <button class="query-pill" onclick="aSetPill(this,'compliance')">Which processes conflict with the new data privacy regulation?</button>
-  </div>
-  <textarea class="query-input" id="a-qinput" placeholder="Select a complex task above…" readonly></textarea>
-  <button class="btn-primary" style="background:#9b6fc4" onclick="aStart()">▶ Deploy Agent</button>
-</div>
+    <!-- Mobile only query (shown below on small screens) -->
+    <div class="left-query control-block">
+      <div class="control-label">Give the agent a complex research task</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="aSetPill(this,'risk')">What are the key risks in our Q3 report vs benchmarks?</button>
+        <button class="query-pill" onclick="aSetPill(this,'market')">Summarise competitor pricing and recommend positioning.</button>
+        <button class="query-pill" onclick="aSetPill(this,'compliance')">Which processes conflict with the new data privacy regulation?</button>
+      </div>
+      <textarea class="query-input" id="a-qinput-m" oninput="document.getElementById('a-qinput').value=this.value" placeholder="Select a complex task above…"></textarea>
+      <button class="btn-primary" style="background:#9b6fc4" onclick="syncAndStart('a-qinput','a',this)">▶ Deploy Agent</button>
+    </div>
 
-<div id="a-controls" style="display:none">
-  <div class="control-block">
-    <div class="control-label">Steps</div>
-    <div class="step-track-v" id="a-steps"></div>
-  </div>
-  <div class="explainer-box" id="a-exp"></div>
-  <button class="btn-primary mobile-hide" style="background:#9b6fc4" id="a-nbtn" onclick="aNext()">Next Step →</button>
-  <button class="btn-secondary mobile-hide" onclick="aRestart()" style="margin-top:0.4rem">↺ Restart</button>
-  <p class="nav-hint mobile-hide" id="a-hint"></p>
-</div>
-```
-
+    <div id="a-controls" style="display:none">
+      <div class="control-block">
+        <div class="control-label">Steps</div>
+        <div class="step-track-v" id="a-steps"></div>
+      </div>
+      <div class="explainer-box" id="a-exp"></div>
+      <button class="btn-primary mobile-hide" style="background:#9b6fc4" id="a-nbtn" onclick="aNext()">Next Step →</button>
+      <button class="btn-secondary mobile-hide" onclick="aRestart()" style="margin-top:0.4rem">↺ Restart</button>
+      <p class="nav-hint mobile-hide" id="a-hint"></p>
+    </div>
   </div>
   <div class="right-panel">
+    <!-- Desktop: query selection lives here, above the canvas -->
+    <div class="right-query">
+      <div class="control-label">Give the agent a complex research task</div>
+      <div class="query-pills">
+        <button class="query-pill" onclick="aSetPill(this,'risk')">What are the key risks in our Q3 report vs benchmarks?</button>
+        <button class="query-pill" onclick="aSetPill(this,'market')">Summarise competitor pricing and recommend positioning.</button>
+        <button class="query-pill" onclick="aSetPill(this,'compliance')">Which processes conflict with the new data privacy regulation?</button>
+      </div>
+      <textarea class="query-input" id="a-qinput" placeholder="Select a complex task above…"></textarea>
+      <button class="btn-start" style="background:#9b6fc4" onclick="aStart()">▶ Deploy Agent</button>
+    </div>
     <div class="canvas-area" id="a-canvas">
       <div class="canvas-empty" id="a-empty">
         <div class="canvas-empty-icon">🤖</div>
@@ -1014,7 +1114,6 @@ body { padding-bottom: 72px; }
 </section>
 
 <!-- ═══════════════ QUIZ ═══════════════ -->
-
 <section class="quiz-section" id="quiz">
   <div class="quiz-inner">
     <h2 class="quiz-title">Which RAG suits your problem?</h2>
@@ -1075,12 +1174,14 @@ body { padding-bottom: 72px; }
 <script>
 const delay = ms => new Promise(r => setTimeout(r, ms));
 
-// On mobile: scroll the canvas into view after each step
+// Scroll canvas into view after each step
 function scrollToCanvas(canvasId) {
   if (window.innerWidth <= 900) {
+    // Mobile: scroll to canvas area
     const el = document.getElementById(canvasId);
     if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
   }
+  // Desktop: canvas is already visible in right panel - no scroll needed
 }
 
 function typewrite(el, text, ms) {
@@ -1151,9 +1252,9 @@ function tMatchQ(q) {
 let tStep=0, tData=null, tQ='';
 const T=5, tNames=['Chunk documents','Embed to vectors','Similarity search','Retrieve best chunk','Generate answer'];
 
-function tSetPill(el,q){document.querySelectorAll('#ch1 .query-pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); document.getElementById('t-qinput').value=q;}
+// tSetPill defined below
 function tNext(){if(tStep<T)tShowStep(tStep+1);}
-function tRestart(){tStep=0; document.getElementById('t-controls').style.display='none'; msbHide(); document.getElementById('t-qinput').value=''; document.querySelectorAll('#ch1 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('t-canvas').innerHTML='<div class="canvas-empty" id="t-empty"><div class="canvas-empty-icon">🔍</div><div class="canvas-empty-text">Select a question and click Start</div></div>';}
+function tRestart(){tStep=0; document.getElementById('t-controls').style.display='none'; msbHide(); document.getElementById('t-qinput').value=''; const _mt=document.getElementById('t-qinput-m'); if(_mt)_mt.value=''; document.querySelectorAll('#ch1 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('t-canvas').innerHTML='<div class="canvas-empty" id="t-empty"><div class="canvas-empty-icon">🔍</div><div class="canvas-empty-text">Select a question and click Start</div></div>';}
 function tStart(){
   tQ=document.getElementById('t-qinput').value.trim(); if(!tQ)return;
   tData=tMatchQ(tQ); tStep=0;
@@ -1246,9 +1347,9 @@ function vMatchQ(q){ q=q.toLowerCase(); for(const k of Object.keys(vDB)){if(q.in
 let vStep=0,vData=null,vQ='';
 const V=5, vNames=['Build keyword index','LLM query expansion','BM25 scoring','Retrieve clause','Generate answer'];
 
-function vSetPill(el,q){document.querySelectorAll('#ch2 .query-pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); document.getElementById('v-qinput').value=q;}
+// vSetPill defined below
 function vNext(){if(vStep<V)vShowStep(vStep+1);}
-function vRestart(){vStep=0; document.getElementById('v-controls').style.display='none'; msbHide(); document.getElementById('v-qinput').value=''; document.querySelectorAll('#ch2 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('v-canvas').innerHTML='<div class="canvas-empty" id="v-empty"><div class="canvas-empty-icon">📋</div><div class="canvas-empty-text">Select a clause and click Start</div></div>';}
+function vRestart(){vStep=0; document.getElementById('v-controls').style.display='none'; msbHide(); document.getElementById('v-qinput').value=''; const _mv=document.getElementById('v-qinput-m'); if(_mv)_mv.value=''; document.querySelectorAll('#ch2 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('v-canvas').innerHTML='<div class="canvas-empty" id="v-empty"><div class="canvas-empty-icon">📋</div><div class="canvas-empty-text">Select a clause and click Start</div></div>';}
 function vStart(){
   vQ=document.getElementById('v-qinput').value.trim(); if(!vQ)return;
   vData=vMatchQ(vQ); vStep=0;
@@ -1349,9 +1450,9 @@ const gQDB={
 let gStep=0,gData=null,gKey=null;
 const G=6, gNames=['Read document','Build graph','Extract entity','Traverse hops','Extract sub-graph','Generate answer'];
 
-function gSetPill(el,key){document.querySelectorAll('#ch3 .query-pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); gKey=key; document.getElementById('g-qinput').value=gQDB[key].text;}
+// gSetPill defined below
 function gNext(){if(gStep<G)gShowStep(gStep+1);}
-function gRestart(){gStep=0;gKey=null; document.getElementById('g-controls').style.display='none'; msbHide(); document.getElementById('g-qinput').value=''; document.querySelectorAll('#ch3 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('g-canvas').innerHTML='<div class="canvas-empty" id="g-empty"><div class="canvas-empty-icon">🕸</div><div class="canvas-empty-text">Select a query and click Start</div></div>';}
+function gRestart(){gStep=0;gKey=null; document.getElementById('g-controls').style.display='none'; msbHide(); document.getElementById('g-qinput').value=''; const _mg=document.getElementById('g-qinput-m'); if(_mg)_mg.value=''; document.querySelectorAll('#ch3 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('g-canvas').innerHTML='<div class="canvas-empty" id="g-empty"><div class="canvas-empty-icon">🕸</div><div class="canvas-empty-text">Select a query and click Start</div></div>';}
 function gStart(){
   if(!gKey){alert('Please select a query above.'); return;}
   gData=gQDB[gKey]; gStep=0;
@@ -1457,9 +1558,9 @@ const aTools=[{icon:'🔍',name:'Vector Search',desc:'Semantic search across int
 let aStep=0,aData=null,aKey=null;
 const A=8, aNames=['Analyse & plan','Select tools','Execute sub-queries','Update memory','Validate confidence','Retry weak results','Ground & synthesise','Generate answer'];
 
-function aSetPill(el,key){document.querySelectorAll('#ch4 .query-pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); aKey=key; document.getElementById('a-qinput').value=aQDB[key].text;}
+// aSetPill defined below
 function aNext(){if(aStep<A)aShowStep(aStep+1);}
-function aRestart(){aStep=0;aKey=null; document.getElementById('a-controls').style.display='none'; msbHide(); document.getElementById('a-qinput').value=''; document.querySelectorAll('#ch4 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('a-canvas').innerHTML='<div class="canvas-empty" id="a-empty"><div class="canvas-empty-icon">🤖</div><div class="canvas-empty-text">Select a task and deploy the agent</div></div>';}
+function aRestart(){aStep=0;aKey=null; document.getElementById('a-controls').style.display='none'; msbHide(); document.getElementById('a-qinput').value=''; const _ma=document.getElementById('a-qinput-m'); if(_ma)_ma.value=''; document.querySelectorAll('#ch4 .query-pill').forEach(p=>p.classList.remove('active')); document.getElementById('a-canvas').innerHTML='<div class="canvas-empty" id="a-empty"><div class="canvas-empty-icon">🤖</div><div class="canvas-empty-text">Select a task and deploy the agent</div></div>';}
 function aStart(){
   if(!aKey){alert('Please select a task above.'); return;}
   aData=aQDB[aKey]; aStep=0;
@@ -1665,7 +1766,53 @@ function msbRestart() {
   chapterConfig[activeChapter].restartFn();
 }
 
-</script>
 
+// Sync mobile input to desktop id then start
+function syncAndStart(qid, prefix, btn) {
+  const mInput = document.getElementById(qid + '-m');
+  const dInput = document.getElementById(qid);
+  if (mInput && dInput) dInput.value = mInput.value;
+  // Call the right start function
+  const fns = { t: tStart, v: vStart, g: gStart, a: aStart };
+  if (fns[prefix]) fns[prefix]();
+}
+
+// Also sync mobile pill clicks to desktop input
+function tSetPill(el, q) {
+  document.querySelectorAll('#ch1 .query-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  const inp = document.getElementById('t-qinput');
+  if (inp) inp.value = q;
+  const inpm = document.getElementById('t-qinput-m');
+  if (inpm) inpm.value = q;
+}
+function vSetPill(el, q) {
+  document.querySelectorAll('#ch2 .query-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  const inp = document.getElementById('v-qinput');
+  if (inp) inp.value = q;
+  const inpm = document.getElementById('v-qinput-m');
+  if (inpm) inpm.value = q;
+}
+function gSetPill(el, key) {
+  document.querySelectorAll('#ch3 .query-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  gKey = key;
+  const inp = document.getElementById('g-qinput');
+  if (inp) inp.value = gQDB[key].text;
+  const inpm = document.getElementById('g-qinput-m');
+  if (inpm) inpm.value = gQDB[key].text;
+}
+function aSetPill(el, key) {
+  document.querySelectorAll('#ch4 .query-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  aKey = key;
+  const inp = document.getElementById('a-qinput');
+  if (inp) inp.value = aQDB[key].text;
+  const inpm = document.getElementById('a-qinput-m');
+  if (inpm) inpm.value = aQDB[key].text;
+}
+
+</script>
 </body>
 </html>
